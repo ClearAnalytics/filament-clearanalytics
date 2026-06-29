@@ -11,6 +11,7 @@ use Filament\Pages\Dashboard;
 use Filament\Pages\Dashboard\Concerns\HasFiltersForm;
 use Filament\Schemas\Schema;
 use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Support\HtmlString;
 use UnitEnum;
 
 class ClearAnalyticsDashboard extends Dashboard
@@ -42,6 +43,16 @@ class ClearAnalyticsDashboard extends Dashboard
     public function getTitle(): string|Htmlable
     {
         return (string) __('clear-analytics::clear-analytics.dashboard.title');
+    }
+
+    public function getSubheading(): string|Htmlable|null
+    {
+        // Product attribution — intentionally not translated (brand name).
+        return new HtmlString(
+            '<a href="https://clearanalytics.eu" target="_blank" rel="noopener" '
+            .'class="inline-flex items-center gap-1 font-medium text-primary-600 hover:underline dark:text-primary-400">'
+            .'🇪🇺 ClearAnalytics.eu</a>'
+        );
     }
 
     /**

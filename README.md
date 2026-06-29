@@ -3,10 +3,10 @@
 ![ClearAnalytics for Filament](art/banner.jpg)
 
 [![PHP](https://img.shields.io/badge/PHP-%5E8.2-777bb4.svg)](https://php.net)
-[![Filament](https://img.shields.io/badge/Filament-v5-fdae4b.svg)](https://filamentphp.com)
+[![Filament](https://img.shields.io/badge/Filament-v4%20%7C%20v5-fdae4b.svg)](https://filamentphp.com)
 
 Display your [ClearAnalytics.eu](https://clearanalytics.eu) web-analytics inside a
-Filament v5 panel — a dedicated **Analytics** dashboard plus a set of plug-and-play
+Filament panel — a dedicated **Analytics** dashboard plus a set of plug-and-play
 widgets (visitors, pageviews, bounce rate, top pages, referrers, devices,
 e-commerce revenue, goals and more).
 
@@ -14,7 +14,7 @@ It talks to the official ClearAnalytics REST API, so your panel never touches
 raw tracking data — it just reads aggregated stats over HTTPS.
 
 > Inspired by [`bezhanSalleh/filament-google-analytics`](https://github.com/bezhanSalleh/filament-google-analytics),
-> but powered by ClearAnalytics instead of Google Analytics. **Filament v5 only.**
+> but powered by ClearAnalytics instead of Google Analytics. Supports **Filament v4 and v5**.
 
 ## Features
 
@@ -33,8 +33,8 @@ raw tracking data — it just reads aggregated stats over HTTPS.
 ## Requirements
 
 - PHP 8.2+
-- Laravel 11, 12 **or 13**
-- Filament v5
+- Laravel 11, 12 or 13
+- Filament v4 or v5
 - A ClearAnalytics account on a plan with **API access**, and an API token
   (Settings → API Tokens).
 
