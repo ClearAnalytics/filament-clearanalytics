@@ -164,6 +164,10 @@ vendor/bin/phpstan analyse --memory-limit=512M
 vendor/bin/pint --test
 ```
 
+## Credits
+
+A product of **[Coding Agency](https://coding.agency?utm_source=github&utm_medium=readme&utm_campaign=filament-clearanalytics)** — custom software from Meppel, the Netherlands.
+
 ## License
 
 MIT.
