@@ -18,7 +18,6 @@ class ClearAnalyticsServiceProvider extends PackageServiceProvider
         $package
             ->name(static::$name)
             ->hasConfigFile()
-            ->hasViews('clear-analytics')
             ->hasTranslations();
     }
 

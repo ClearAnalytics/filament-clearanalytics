@@ -5,6 +5,7 @@ namespace ClearAnalytics\Filament;
 use ClearAnalytics\Filament\Pages\ClearAnalyticsDashboard;
 use Filament\Contracts\Plugin;
 use Filament\Panel;
+use Livewire\Livewire;
 
 class ClearAnalyticsPlugin implements Plugin
 {
@@ -28,6 +29,15 @@ class ClearAnalyticsPlugin implements Plugin
 
     public function register(Panel $panel): void
     {
+        // Register every widget as a Livewire component so the dedicated dashboard
+        // page (and any manual placement) can render it. Filament only auto-registers
+        // widgets passed to $panel->widgets(); widgets returned by a custom page's
+        // getWidgets() would otherwise be "component not found" at render time. This
+        // does NOT add them to the panel's own dashboard.
+        foreach (static::widgetMap() as $config) {
+            Livewire::component($this->livewireComponentName($config['class']), $config['class']);
+        }
+
         if (config('clear-analytics.dashboard.enabled', true)) {
             $panel->pages([
                 ClearAnalyticsDashboard::class,
@@ -209,5 +219,31 @@ class ClearAnalyticsPlugin implements Plugin
         }
 
         return (bool) config('clear-analytics.features.'.$feature, true);
+    }
+
+    /**
+     * Derive the Livewire component name Filament uses to render a widget, in a
+     * way that works across Filament v4 (Livewire v3 ComponentRegistry) and
+     * Filament v5 (Livewire v4 Finder).
+     *
+     * @param  class-string  $class
+     */
+    protected function livewireComponentName(string $class): string
+    {
+        // String class names (not ::class) keep this resolvable on both versions:
+        // Finder exists only on Livewire v4 (Filament v5), ComponentRegistry only
+        // on Livewire v3 (Filament v4).
+        if (class_exists('Livewire\\Finder\\Finder')) {
+            $finder = app('Livewire\\Finder\\Finder');
+
+            /** @var array{0: ?string, 1: string} $parsed */
+            $parsed = $finder->parseNamespaceAndName($class);
+
+            return $parsed[1];
+        }
+
+        $registry = app('Livewire\\Mechanisms\\ComponentRegistry');
+
+        return $registry->getName($class);
     }
 }
