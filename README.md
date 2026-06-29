@@ -1,5 +1,7 @@
 # Filament ClearAnalytics
 
+![ClearAnalytics for Filament](art/banner.jpg)
+
 [![PHP](https://img.shields.io/badge/PHP-%5E8.2-777bb4.svg)](https://php.net)
 [![Filament](https://img.shields.io/badge/Filament-v5-fdae4b.svg)](https://filamentphp.com)
 

@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1280px; height: 720px; overflow: hidden; }
+  body {
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: #ffffff;
+    color: #0f172a;
+    -webkit-font-smoothing: antialiased;
+  }
+  .stage { width: 1280px; height: 720px; display: flex; }
+
+  /* ---------- Left brand panel ---------- */
+  .brand {
+    width: 468px;
+    height: 100%;
+    padding: 64px 56px;
+    background: linear-gradient(160deg, #fff5f4 0%, #ffffff 55%, #fdfdfd 100%);
+    border-right: 1px solid #f1e7e6;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  .brand::after {
+    content: "";
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(420px 320px at -8% -6%, rgba(255,45,32,0.10), transparent 70%);
+    pointer-events: none;
+  }
+  .logo-row { display: flex; align-items: center; gap: 16px; position: relative; z-index: 1; }
+  .logo-badge {
+    width: 64px; height: 64px; border-radius: 16px;
+    background: #ffffff;
+    border: 1px solid #f0e3e2;
+    box-shadow: 0 8px 24px rgba(255,45,32,0.12);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .logo-badge svg { width: 40px; height: 40px; }
+  .wordmark { font-size: 26px; font-weight: 800; letter-spacing: -0.02em; }
+  .wordmark span { color: #FF2D20; }
+
+  .headline {
+    position: relative; z-index: 1;
+    margin-top: 58px;
+    font-size: 50px; line-height: 1.06; font-weight: 800; letter-spacing: -0.03em;
+  }
+  .headline em { color: #FF2D20; font-style: normal; }
+  .subhead {
+    position: relative; z-index: 1;
+    margin-top: 22px; font-size: 19px; line-height: 1.5; color: #475569; max-width: 330px; font-weight: 450;
+  }
+  .features { position: relative; z-index: 1; margin-top: 34px; display: flex; flex-direction: column; gap: 14px; }
+  .feature { display: flex; align-items: center; gap: 12px; font-size: 16.5px; color: #334155; font-weight: 550; }
+  .feature .dot {
+    width: 22px; height: 22px; border-radius: 7px; flex: none;
+    background: rgba(255,45,32,0.10); color: #FF2D20;
+    display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800;
+  }
+  .foot {
+    position: relative; z-index: 1; margin-top: auto;
+    padding-top: 20px; border-top: 1px solid #f1e7e6;
+    font-size: 14.5px; color: #94a3b8; font-weight: 600; letter-spacing: 0.01em; line-height: 1.5;
+  }
+  .foot b { color: #FF2D20; }
+
+  /* ---------- Right dashboard mockup ---------- */
+  .app {
+    flex: 1; height: 100%;
+    background: #f1f5f9;
+    padding: 30px 34px;
+    display: flex; flex-direction: column; gap: 16px;
+  }
+  .app-top { display: flex; align-items: center; justify-content: space-between; }
+  .app-title { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; }
+  .app-title small { display:block; font-size: 12.5px; font-weight: 600; color: #94a3b8; letter-spacing: 0.02em; margin-top: 2px; }
+  .pills { display: flex; gap: 10px; }
+  .pill {
+    height: 36px; padding: 0 14px; border-radius: 9px; background: #ffffff;
+    border: 1px solid #e2e8f0; display: flex; align-items: center; gap: 8px;
+    font-size: 13.5px; font-weight: 600; color: #334155; box-shadow: 0 1px 2px rgba(15,23,42,0.04);
+  }
+  .pill .ca { width: 8px; height: 8px; border-radius: 50%; background: #FF2D20; }
+  .pill svg { width: 14px; height: 14px; color: #94a3b8; }
+
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .card {
+    background: #ffffff; border: 1px solid #e7edf3; border-radius: 14px;
+    box-shadow: 0 1px 2px rgba(15,23,42,0.04);
+  }
+  .stat { padding: 16px 16px 12px; position: relative; overflow: hidden; }
+  .stat .label { font-size: 13px; font-weight: 600; color: #64748b; }
+  .stat .value { font-size: 27px; font-weight: 800; letter-spacing: -0.02em; margin-top: 4px; }
+  .stat .chg { margin-top: 6px; font-size: 12.5px; font-weight: 700; display: flex; align-items: center; gap: 4px; }
+  .up { color: #16a34a; }
+  .down { color: #dc2626; }
+  .spark { position: absolute; right: 0; bottom: 0; width: 100%; height: 34px; opacity: 0.9; }
+
+  .row2 { display: grid; grid-template-columns: 1.55fr 1fr; gap: 14px; flex: 1; min-height: 0; }
+  .panel { padding: 16px 18px; display: flex; flex-direction: column; min-height: 0; }
+  .panel h3 { font-size: 14.5px; font-weight: 700; color: #1e293b; }
+  .panel h3 small { font-weight: 600; color: #94a3b8; }
+  .chart-wrap { flex: 1; margin-top: 8px; position: relative; }
+  .chart-wrap svg { width: 100%; height: 100%; }
+  .legend { display: flex; gap: 16px; margin-top: 4px; font-size: 12px; font-weight: 600; color: #64748b; }
+  .legend i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+
+  table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+  th { text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; color: #94a3b8; font-weight: 700; padding-bottom: 8px; }
+  th.r, td.r { text-align: right; }
+  td { font-size: 13.5px; padding: 7px 0; border-top: 1px solid #f1f5f9; color: #334155; font-weight: 550; }
+  td.path { color: #0f172a; font-weight: 600; }
+  td.num { font-variant-numeric: tabular-nums; color: #475569; font-weight: 650; }
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <!-- LEFT: brand -->
+  <div class="brand">
+    <div class="logo-row">
+      <div class="logo-badge">
+        <svg viewBox="0 0 100 95" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="18,68 30,74 42,68 30,62" fill="#FF2D20"/><polygon points="18,68 18,77 30,83 30,74" fill="#CC2419"/><polygon points="30,74 30,83 42,77 42,68" fill="#E62A1E"/>
+          <polygon points="6,54 18,60 30,54 18,48" fill="#FF2D20"/><polygon points="6,54 6,63 18,69 18,60" fill="#CC2419"/><polygon points="18,60 18,69 30,63 30,54" fill="#E62A1E"/>
+          <polygon points="6,38 18,44 30,38 18,32" fill="#FF2D20" opacity="0.92"/><polygon points="6,38 6,47 18,53 18,44" fill="#CC2419" opacity="0.92"/><polygon points="18,44 18,53 30,47 30,38" fill="#E62A1E" opacity="0.92"/>
+          <polygon points="18,24 30,30 42,24 30,18" fill="#FF2D20"/><polygon points="18,24 18,33 30,39 30,30" fill="#CC2419"/><polygon points="30,30 30,39 42,33 42,24" fill="#E62A1E"/>
+          <polygon points="34,16 46,22 58,16 46,10" fill="#FF2D20"/><polygon points="34,16 34,25 46,31 46,22" fill="#CC2419"/><polygon points="46,22 46,31 58,25 58,16" fill="#E62A1E"/>
+          <polygon points="50,6 62,12 74,6 62,0" fill="#FF2D20"/><polygon points="50,6 50,15 62,21 62,12" fill="#CC2419"/><polygon points="62,12 62,21 74,15 74,6" fill="#E62A1E"/>
+          <polygon points="62,20 74,26 86,20 74,14" fill="#FF2D20" opacity="0.92"/><polygon points="62,20 62,29 74,35 74,26" fill="#CC2419" opacity="0.92"/><polygon points="74,26 74,35 86,29 86,20" fill="#E62A1E" opacity="0.92"/>
+          <polygon points="70,34 82,40 94,34 82,28" fill="#FF2D20" opacity="0.84"/><polygon points="70,34 70,43 82,49 82,40" fill="#CC2419" opacity="0.84"/><polygon points="82,40 82,49 94,43 94,34" fill="#E62A1E" opacity="0.84"/>
+          <polygon points="76,48 88,54 100,48 88,42" fill="#FF2D20" opacity="0.76"/><polygon points="76,48 76,57 88,63 88,54" fill="#CC2419" opacity="0.76"/><polygon points="88,54 88,63 100,57 100,48" fill="#E62A1E" opacity="0.76"/>
+          <polygon points="38,40 50,46 62,40 50,34" fill="#FF2D20" opacity="0.55"/><polygon points="38,40 38,46 50,52 50,46" fill="#CC2419" opacity="0.55"/><polygon points="50,46 50,52 62,46 62,40" fill="#E62A1E" opacity="0.55"/>
+        </svg>
+      </div>
+      <div class="wordmark">Clear<span>Analytics</span></div>
+    </div>
+
+    <div class="headline">Analytics widgets for <em>Filament</em></div>
+    <div class="subhead">Privacy-friendly web analytics from ClearAnalytics.eu, right inside your Filament v5 panel.</div>
+
+    <div class="features">
+      <div class="feature"><span class="dot">✓</span> Dedicated dashboard &amp; drop-in widgets</div>
+      <div class="feature"><span class="dot">✓</span> Visitors, pages, sources, devices &amp; goals</div>
+      <div class="feature"><span class="dot">✓</span> E-commerce revenue &amp; live visitors</div>
+      <div class="feature"><span class="dot">✓</span> Period filter &amp; multi-site switcher</div>
+    </div>
+
+    <div class="foot">composer require <b>clearanalytics/filament-clearanalytics</b></div>
+  </div>
+
+  <!-- RIGHT: dashboard -->
+  <div class="app">
+    <div class="app-top">
+      <div class="app-title">Analytics<small>CLEARANALYTICS · LAST 7 DAYS</small></div>
+      <div class="pills">
+        <div class="pill"><span class="ca"></span> All sites
+          <svg viewBox="0 0 20 20" fill="currentColor"><path d="M5.2 7.5 10 12l4.8-4.5" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>
+        </div>
+        <div class="pill">Last 7 days
+          <svg viewBox="0 0 20 20" fill="currentColor"><path d="M5.2 7.5 10 12l4.8-4.5" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- stat cards -->
+    <div class="stats">
+      <div class="card stat">
+        <div class="label">Visitors</div><div class="value">12.4K</div>
+        <div class="chg up">▲ +12.5%</div>
+        <svg class="spark" viewBox="0 0 120 34" preserveAspectRatio="none"><path d="M0,26 L17,24 L34,27 L51,18 L68,20 L85,12 L102,14 L120,6 L120,34 L0,34 Z" fill="rgba(255,45,32,0.10)"/><path d="M0,26 L17,24 L34,27 L51,18 L68,20 L85,12 L102,14 L120,6" fill="none" stroke="#FF2D20" stroke-width="2"/></svg>
+      </div>
+      <div class="card stat">
+        <div class="label">Pageviews</div><div class="value">38.1K</div>
+        <div class="chg up">▲ +8.2%</div>
+        <svg class="spark" viewBox="0 0 120 34" preserveAspectRatio="none"><path d="M0,24 L17,26 L34,20 L51,22 L68,14 L85,17 L102,10 L120,9 L120,34 L0,34 Z" fill="rgba(16,163,74,0.10)"/><path d="M0,24 L17,26 L34,20 L51,22 L68,14 L85,17 L102,10 L120,9" fill="none" stroke="#16a34a" stroke-width="2"/></svg>
+      </div>
+      <div class="card stat">
+        <div class="label">Bounce rate</div><div class="value">42.3%</div>
+        <div class="chg up">▼ -3.1%</div>
+        <svg class="spark" viewBox="0 0 120 34" preserveAspectRatio="none"><path d="M0,10 L17,12 L34,11 L51,16 L68,15 L85,20 L102,19 L120,24 L120,34 L0,34 Z" fill="rgba(16,163,74,0.08)"/><path d="M0,10 L17,12 L34,11 L51,16 L68,15 L85,20 L102,19 L120,24" fill="none" stroke="#16a34a" stroke-width="2"/></svg>
+      </div>
+      <div class="card stat">
+        <div class="label">Avg. visit duration</div><div class="value">3m 07s</div>
+        <div class="chg up">▲ +15.7%</div>
+        <svg class="spark" viewBox="0 0 120 34" preserveAspectRatio="none"><path d="M0,28 L17,22 L34,24 L51,16 L68,18 L85,11 L102,12 L120,7 L120,34 L0,34 Z" fill="rgba(255,45,32,0.10)"/><path d="M0,28 L17,22 L34,24 L51,16 L68,18 L85,11 L102,12 L120,7" fill="none" stroke="#FF2D20" stroke-width="2"/></svg>
+      </div>
+    </div>
+
+    <!-- chart + table -->
+    <div class="row2">
+      <div class="card panel">
+        <h3>Visitors &amp; pageviews <small>· last 7 days</small></h3>
+        <div class="legend"><span><i style="background:#FF2D20"></i>Visitors</span><span><i style="background:#16a34a"></i>Pageviews</span></div>
+        <div class="chart-wrap">
+          <svg viewBox="0 0 520 210" preserveAspectRatio="none">
+            <line x1="0" y1="40" x2="520" y2="40" stroke="#eef2f7"/><line x1="0" y1="90" x2="520" y2="90" stroke="#eef2f7"/><line x1="0" y1="140" x2="520" y2="140" stroke="#eef2f7"/><line x1="0" y1="190" x2="520" y2="190" stroke="#e8edf3"/>
+            <path d="M0,150 C60,140 90,120 150,118 C210,116 240,96 300,86 C360,76 400,70 460,52 L520,44 L520,210 L0,210 Z" fill="rgba(22,163,74,0.08)"/>
+            <path d="M0,150 C60,140 90,120 150,118 C210,116 240,96 300,86 C360,76 400,70 460,52 L520,44" fill="none" stroke="#16a34a" stroke-width="2.5"/>
+            <path d="M0,176 C60,170 95,156 150,152 C210,148 250,140 300,128 C360,114 405,112 460,92 L520,82 L520,210 L0,210 Z" fill="rgba(255,45,32,0.09)"/>
+            <path d="M0,176 C60,170 95,156 150,152 C210,148 250,140 300,128 C360,114 405,112 460,92 L520,82" fill="none" stroke="#FF2D20" stroke-width="2.5"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <h3>Top pages</h3>
+        <table>
+          <thead><tr><th>Page</th><th class="r">Visitors</th><th class="r">Views</th></tr></thead>
+          <tbody>
+            <tr><td class="path">/</td><td class="num r">4,182</td><td class="num r">9,540</td></tr>
+            <tr><td class="path">/pricing</td><td class="num r">2,067</td><td class="num r">3,318</td></tr>
+            <tr><td class="path">/docs/api</td><td class="num r">1,540</td><td class="num r">2,884</td></tr>
+            <tr><td class="path">/blog/launch</td><td class="num r">1,126</td><td class="num r">1,790</td></tr>
+            <tr><td class="path">/features</td><td class="num r">933</td><td class="num r">1,402</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
