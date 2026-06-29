@@ -31,7 +31,7 @@ raw tracking data — it just reads aggregated stats over HTTPS.
 ## Requirements
 
 - PHP 8.2+
-- Laravel 11 / 12
+- Laravel 11, 12 **or 13**
 - Filament v5
 - A ClearAnalytics account on a plan with **API access**, and an API token
   (Settings → API Tokens).
@@ -48,6 +48,28 @@ Optionally publish the config and translations:
 php artisan vendor:publish --tag="clear-analytics-config"
 php artisan vendor:publish --tag="clear-analytics-translations"
 ```
+
+<details>
+<summary>Installing from a local checkout (development)</summary>
+
+Add a path repository to your app's `composer.json`, then require the package:
+
+```json
+"repositories": [
+    {
+        "type": "path",
+        "url": "/absolute/path/to/filament-clearanalytics",
+        "options": { "symlink": true }
+    }
+]
+```
+
+```bash
+composer require "clearanalytics/filament-clearanalytics:@dev"
+```
+
+The symlink means edits to the package are reflected in your app immediately.
+</details>
 
 ## Configuration
 
