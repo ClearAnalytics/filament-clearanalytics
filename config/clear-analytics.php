@@ -79,7 +79,7 @@ return [
         'navigation_sort' => 2,
         'navigation_group' => null,
         // Number of grid columns on the dedicated dashboard page.
-        'columns' => 4,
+        'columns' => 2,
     ],
 
     /*

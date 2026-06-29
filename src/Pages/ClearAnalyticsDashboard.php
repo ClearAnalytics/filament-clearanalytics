@@ -60,7 +60,7 @@ class ClearAnalyticsDashboard extends Dashboard
      */
     public function getColumns(): int|array
     {
-        return (int) config('clear-analytics.dashboard.columns', 4);
+        return min((int) config('clear-analytics.dashboard.columns', 2), 3);
     }
 
     /**
