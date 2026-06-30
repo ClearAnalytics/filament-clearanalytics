@@ -1,6 +1,6 @@
 # Filament ClearAnalytics
 
-![ClearAnalytics for Filament](art/banner.jpg)
+<img src="art/banner.jpg" alt="ClearAnalytics for Filament" class="filament-hidden">
 
 [![PHP](https://img.shields.io/badge/PHP-%5E8.2-777bb4.svg)](https://php.net)
 [![Filament](https://img.shields.io/badge/Filament-v4%20%7C%20v5-fdae4b.svg)](https://filamentphp.com)
